@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    <h1>Summary of the Article</h1>
+    <div class="summary">
+        <p>{{ summary }}</p>
+    </div>
+    <div class="link">
+        <a href="{{ link }}" target="_blank">Read the full article on Wikipedia</a>
+        <br>
+        <a href="{% url 'main' %}">Back to main page</a>
+    </div>
+
+{% endblock %}

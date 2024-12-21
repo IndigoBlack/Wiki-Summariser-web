@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    <h1>Search Topic</h1>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="text" name="api" placholder="Enter API">
+        <input type="submit" value="search">
+    </form>
+
+{% endblock %}

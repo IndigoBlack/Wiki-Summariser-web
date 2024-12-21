@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    <div class="search-results">
+        {% if results %}
+            {% for result in results %}
+                <div class="result-item">
+                    <h2>{{ result.title }}</h2>
+                    <p>{{ result.snippet|safe }}</p>
+                    <!-- Use a form to choose the article -->
+                    <form action="{% url 'choose_article' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="topic" value="{{ topic }}">
+                        <input type="hidden" name="choice" value="{{ forloop.counter }}">
+                        <button type="submit" class="choose-button">Choose this article</button>
+                    </form>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No results found for "{{ topic }}". Please try another search term.</p>
+        {% endif %}
+    </div>
+
+{% endblock %}
