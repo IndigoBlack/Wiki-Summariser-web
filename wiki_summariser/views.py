@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from dotenv import load_dotenv
 import requests
 import os
 # Create your views here.
@@ -8,6 +9,8 @@ import os
     summarizes the overview of the article using an AI API then prints the link to the full article at the end."""
 
 """ Project Title: In A Nutshell """
+
+load_dotenv()
 
 # Use environment variable for API key
 API_KEY = os.getenv("API_key")
