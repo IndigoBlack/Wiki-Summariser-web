@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 import requests
 import os
 # Create your views here.
