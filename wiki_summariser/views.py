@@ -22,13 +22,6 @@ def main(request):
             return render(request, "search_results.html", {"results": result, "topic": topic})
     return render(request, "search_form.html")
 
-def search_results(request):
-    if request.method == "POST":
-        topic = request.POST.get("topic")
-        result = wiki_search(topic)
-        return render(request, "search_results.html", {"results": result, "topic": topic})
-    return render(request, "search_form.html")
-
 #Parse the user-input into the wikisearch API
 def wiki_search(s):
     link = "https://en.wikipedia.org/w/api.php"
