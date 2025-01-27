@@ -1,7 +1,7 @@
 from django.shortcuts import render
-#from dotenv import load_dotenv
+from transformers import pipeline
+from .apps import summarizer
 import requests
-import os
 # Create your views here.
 
 
@@ -10,10 +10,8 @@ import os
 
 """ Project Title: In A Nutshell """
 
-load_dotenv()
 
 # Use environment variable for API key
-API_KEY = os.getenv("API_key")
 
 def main(request):
     if request.method == "POST":
@@ -87,26 +85,14 @@ def choose_article_content(title):
 def summarize(content):
     if not content:
         return "No content to summarize."
-    params = {
-        "key": API_KEY,
-        "txt": content,
-        "sentences": 50
-    }
-    summarise_url = "https://api.meaningcloud.com/summarization-1.0"
+    if summarizer is None:
+        return "Summarization model not loaded."
     try:
-        response = requests.get(summarise_url, params=params)
-        if response.status_code == 200:
-            result = response.json()
-            print(API_KEY)
-            #print(result)
-            return result.get("summary", "Could not summarize the article.")
-        else:
-            return "Error in summarization API."
+        summary = summarizer(content, max_length=150)[0]["summary_text"]
+        return summary
     except requests.exceptions.RequestException as e:
         return f"An error occurred: {e}"
 
 
 if __name__ == "__main__":
     main()
-
-
