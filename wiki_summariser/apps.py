@@ -13,7 +13,9 @@ class WikiSummariserConfig(AppConfig):
             summarizer_model = cache.get('summarizer_model')
             if summarizer_model is None:
                 try:
+                    print("About to initialize Summarizer")  # Debug print
                     summarizer_model = Summarizer()
+                    print("Summarizer initialized")
                     cache.set('summarizer_model', summarizer_model, timeout=None)
                     print("Summarization model loaded successfully.")
                 except Exception as e:
