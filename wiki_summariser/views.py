@@ -1,4 +1,5 @@
 from django.shortcuts import render
+print("import summarizer to views")
 from .apps import summarizer
 import requests
 # Create your views here.

@@ -1,6 +1,7 @@
 from django.apps import AppConfig
 from django.conf import settings
 from django.core.cache import cache
+print("import summizer into app.py file")
 from summarizer import Summarizer
 
 class WikiSummariserConfig(AppConfig):
