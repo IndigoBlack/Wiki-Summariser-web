@@ -5,3 +5,4 @@ psycopg2-binary==2.9.8
 whitenoise==6.0.0
 python-dotenv==1.0.0
 bert-extractive-summarizer
+torch==2.0.1
