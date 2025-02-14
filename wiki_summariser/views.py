@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from transformers import pipeline
 from .apps import summarizer
 import requests
 # Create your views here.

@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 from django.conf import settings
 from django.core.cache import cache
-from transformers import pipeline
+from summarizer import Summarizer
 
 class WikiSummariserConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
@@ -9,18 +9,21 @@ class WikiSummariserConfig(AppConfig):
 
     def ready(self):
         if settings.configured:
-            summarizer = cache.get('summarizer')  # Try to get from cache
-            if summarizer is None:  # If not in cache, load and store
+            summarizer_model = cache.get('summarizer_model')
+            if summarizer_model is None:
                 try:
-                    summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
-                    cache.set('summarizer', summarizer, timeout=None)  # No timeout (cache indefinitely)
+                    summarizer_model = Summarizer()  # Initialize the Summarizer
+                    cache.set('summarizer_model', summarizer_model, timeout=None)
                     print("Summarization model loaded successfully.")
                 except Exception as e:
                     print(f"Error loading summarization model: {e}")
-                    summarizer = None
-                    cache.set('summarizer', None, timeout=None) # Store None in cache to prevent repeated attempts
+                    summarizer_model = None
+                    cache.set('summarizer_model', None, timeout=None)
             else:
                 print("Summarization model loaded from cache.")
-            global summarizer
+
+            global summarizer  # Access the cached summarizer instance
+            summarizer = summarizer_model  # Assign it after successful loading or retrieval
+
         else:
             print("settings not configured yet. Skipping model loading.")
