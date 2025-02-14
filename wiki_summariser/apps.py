@@ -9,10 +9,11 @@ class WikiSummariserConfig(AppConfig):
 
     def ready(self):
         if settings.configured:
+            global summarizer
             summarizer_model = cache.get('summarizer_model')
             if summarizer_model is None:
                 try:
-                    summarizer_model = Summarizer()  # Initialize the Summarizer
+                    summarizer_model = Summarizer()
                     cache.set('summarizer_model', summarizer_model, timeout=None)
                     print("Summarization model loaded successfully.")
                 except Exception as e:
@@ -22,8 +23,7 @@ class WikiSummariserConfig(AppConfig):
             else:
                 print("Summarization model loaded from cache.")
 
-            global summarizer  # Access the cached summarizer instance
-            summarizer = summarizer_model  # Assign it after successful loading or retrieval
+            summarizer = summarizer_model  # Assign the model to the global variable
 
         else:
             print("settings not configured yet. Skipping model loading.")
