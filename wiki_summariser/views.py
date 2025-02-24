@@ -1,5 +1,4 @@
 from django.shortcuts import render
-print("import summarizer to views")
 from .apps import summarizer
 import requests
 # Create your views here.
@@ -79,12 +78,16 @@ def summarize(content):
     if not content:
         return "No content to summarize."
     if summarizer is None:
-        return "Summarization model not loaded."
+        return "Summarization model not loaded. Please try again later."
     try:
-        summary = summarizer(content, max_length=150)[0]["summary_text"]
-        return summary
-    except requests.exceptions.RequestException as e:
-        return f"An error occurred: {e}"
+        result = summarizer(content, max_length=150)  # Get the list of dictionaries
+        if result:  # Check if the list is not empty
+            summary = result[0]["summary_text"] # Access the first dictionary and its "summary_text"
+            return summary
+        else:
+            return "No summary generated." #Handle the case where the list is empty.
+    except Exception as e:
+        return f"An error occurred during summarization: {e}"
 
 
 if __name__ == "__main__":

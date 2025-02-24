@@ -1,8 +1,6 @@
-from django.apps import AppConfig
 from django.conf import settings
-from django.core.cache import cache
-print("import summizer into app.py file")
-from summarizer import Summarizer
+from django.apps import AppConfig
+from transformers import pipeline
 
 class WikiSummariserConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
@@ -11,22 +9,16 @@ class WikiSummariserConfig(AppConfig):
     def ready(self):
         if settings.configured:
             global summarizer
-            summarizer_model = cache.get('summarizer_model')
-            if summarizer_model is None:
-                try:
-                    print("About to initialize Summarizer")  # Debug print
-                    summarizer_model = Summarizer()
-                    print("Summarizer initialized")
-                    cache.set('summarizer_model', summarizer_model, timeout=None)
-                    print("Summarization model loaded successfully.")
-                except Exception as e:
-                    print(f"Error loading summarization model: {e}")
-                    summarizer_model = None
-                    cache.set('summarizer_model', None, timeout=None)
-            else:
-                print("Summarization model loaded from cache.")
 
-            summarizer = summarizer_model  # Assign the model to the global variable
+            try:
+                print("About to initialize Summarizer")  # Debug print
+                summarizer = pipeline("summarization", model="google/pegasus-xsum")
+                print("Summarizer initialized")
+                
+            except Exception as e:
+                print(f"Error loading summarization model: {e}")
+                summarizer = None
 
+            print(f"Summarizer model is: {summarizer}")  # Confirm if the model is loaded
         else:
             print("settings not configured yet. Skipping model loading.")
