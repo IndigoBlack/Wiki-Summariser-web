@@ -6,7 +6,7 @@ This is a Django web application that allows users to search for Wikipedia artic
 
 - Search Wikipedia articles by topic.
 - Choose an article from the search results.
-- Summarize the introductory section (overview) of the chosen article using a Hugging Face Transformers summarization model.
+- Summarize the introductory section (overview) of the chosen article using a Hugging Face Transformers summarization model(google/pegasus-xsum).
 - Display the summarized text along with a link to the full article.
 
 ## Requirements

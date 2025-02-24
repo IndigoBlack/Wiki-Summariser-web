@@ -1,8 +1,6 @@
-Django==4.2.7
-requests==2.31.0
-gunicorn==21.2.0
-psycopg2-binary==2.9.8
-whitenoise==6.0.0
-python-dotenv==1.0.0
-bert-extractive-summarizer
-torch==2.0.1
+Django>=4.0
+requests>=2.26.0
+transformers>=4.18.0
+torch>=1.10.0  # Or the appropriate version for your system
+gunicorn>=20.1.0 #For deployment
+whitenoise>=6.0 #For static files
